@@ -8,15 +8,21 @@ import {
   useColorModeValue,
   Button,
   useDisclosure,
+  Divider,
 } from '@chakra-ui/react';
 import { fetchLeads } from 'api/leadApi';
 import LeadAssociationModal from './modal/LeadAssociationModal';
 
 export default function ExpandedRowContent({ row }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [associatedLeads, setAssociatedLeads] = useState(
+    row.original?.Leads || [],
+  ); // Initialize associatedLeads state
   const [leads, setLeads] = useState([]);
   const { Leads } = row.original || {}; // Fallback to empty object if row.original is undefined or null
   const contactId = row.original.id; // Get the contact ID from the row data
+  const leadIds = Leads.map((lead) => lead.id);
+  const textColor = useColorModeValue('gray.600', 'white');
 
   const statusColors = {
     new: '#00B0FF',
@@ -24,9 +30,24 @@ export default function ExpandedRowContent({ row }) {
     followup: '#FF9800',
     converted: '#4CAF50',
   };
-  const textColor = useColorModeValue('gray.600', 'white');
+
+  const refreshLeads = async () => {
+    const allLeads = await fetchLeads();
+    setLeads(allLeads); // Update the leads state with the latest data
+  };
+
+  const updateAssociatedLeads = (selectedLeadIds) => {
+  setAssociatedLeads((prevLeads) => [
+    ...prevLeads,
+    ...leads.filter((lead) => selectedLeadIds.includes(lead.id)),
+  ]);
+
+  // Refresh leads after associating them
+  refreshLeads();
+};
+
+
   useEffect(() => {
-    // Fetch leads when the component mounts
     const fetchData = async () => {
       const allLeads = await fetchLeads();
       setLeads(allLeads);
@@ -34,6 +55,7 @@ export default function ExpandedRowContent({ row }) {
     fetchData();
   }, []);
 
+  // console.log('Lead IDs : ', leadIds);
   return (
     <Box>
       {/* Render Leads if available */}
@@ -122,12 +144,16 @@ export default function ExpandedRowContent({ row }) {
         Associate Leads
       </Button>
 
+      <Divider borderColor="gray.300" borderWidth="1px" marginTop="1rem" />
+
       {/* LeadAssociationModal component */}
       <LeadAssociationModal
         isOpen={isOpen}
         onClose={onClose}
         leads={leads}
         contactId={contactId}
+        leadIds={leadIds}
+        updateAssociatedLeads={updateAssociatedLeads} // Pass the update function
       />
     </Box>
   );

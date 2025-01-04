@@ -41,8 +41,9 @@ export default function ComplexTable() {
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
   const rowBgColor = useColorModeValue('blue.50', 'gray.700');
 
-  const addNewContactToTable = (newContact) => {
-    setTableData((prevData) => [...prevData, newContact]); // Use parent-provided state
+  const refetchContacts = async () => {
+    const contacts = await fetchContacts(); // Fetch the updated contacts
+    setTableData(contacts); // Update table data state
   };
 
   useEffect(() => {
@@ -213,7 +214,7 @@ export default function ComplexTable() {
           <AddContactModal
             isOpen={isAddModalOpen}
             onClose={() => setIsAddModalOpen(false)}
-            addNewContactToTable={addNewContactToTable}
+            refetchContacts={refetchContacts}
           />
         </Flex>
         <Box>

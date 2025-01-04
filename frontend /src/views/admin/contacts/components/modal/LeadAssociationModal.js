@@ -23,17 +23,18 @@ const LeadAssociationModal = ({
   onClose,
   leads,
   contactId,
-  associatedLeads,
+  leadIds,
+  updateAssociatedLeads,
 }) => {
   const [selectedLeadIds, setSelectedLeadIds] = useState([]);
   const toast = useToast(); // Initialize the toast hook
 
   // Update selectedLeadIds whenever the modal opens
   useEffect(() => {
-    if (isOpen && associatedLeads) {
-      setSelectedLeadIds(associatedLeads); // Set the already associated leads as selected
+    if (isOpen && leadIds) {
+      setSelectedLeadIds(leadIds); // Set the already associated leads as selected
     }
-  }, [isOpen, associatedLeads]);
+  }, [isOpen, leadIds]);
 
   const handleAssociateLeads = async () => {
     try {
@@ -48,6 +49,9 @@ const LeadAssociationModal = ({
         duration: 4000,
         isClosable: true,
       });
+
+      // Update the parent component with new associated leads and refresh leads
+      updateAssociatedLeads(selectedLeadIds);
 
       setSelectedLeadIds([]); // Clear selected leads
       onClose(); // Close the modal
@@ -64,6 +68,7 @@ const LeadAssociationModal = ({
         isClosable: true,
       });
     }
+    window.location.reload();
   };
 
   return (

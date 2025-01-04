@@ -1,9 +1,7 @@
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Button,
   FormControl,
   FormLabel,
-  IconButton,
   Input,
   Modal,
   ModalBody,
@@ -13,12 +11,12 @@ import {
   ModalHeader,
   ModalOverlay,
   useToast,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
+import { addContact } from 'api/contactApi';
 import { useState } from 'react';
-import { addContact } from 'api/contactApi'; 
 
-const AddContactModal = ({ isOpen, onClose, addNewContactToTable }) => {
+const AddContactModal = ({ isOpen, onClose, refetchContacts }) => {
   const [contactData, setContactData] = useState({
     name: '',
     role: '',
@@ -63,8 +61,8 @@ const AddContactModal = ({ isOpen, onClose, addNewContactToTable }) => {
         isClosable: true,
       });
 
-      // Update the table with the new contact
-      addNewContactToTable(newContact);
+      // Call refetchContacts to update the table data in the parent
+      refetchContacts();
 
       // Reset form and close modal
       setContactData({
