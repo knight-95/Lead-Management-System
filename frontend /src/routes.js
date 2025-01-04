@@ -1,15 +1,12 @@
 import { Icon } from '@chakra-ui/react';
-import {
-  MdBarChart,
-  MdContacts,
-  MdHome,
-  MdLock
-} from 'react-icons/md';
+import { MdBarChart, MdContacts, MdHome, MdLock } from 'react-icons/md';
+import { FaHandsHelping } from 'react-icons/fa';
 
 // Admin Imports
 import Contacts from 'views/admin/contacts';
 import MainDashboard from 'views/admin/default';
 import LeadTables from 'views/admin/leads';
+import Interactions from 'views/admin/interactions';
 
 // Auth Imports
 import SignInCentered from 'views/auth/signIn';
@@ -35,6 +32,15 @@ const routes = [
     icon: <Icon as={MdContacts} width="20px" height="20px" color="inherit" />,
     path: '/contacts',
     component: <Contacts />,
+  },
+  {
+    name: 'Interactions',
+    layout: '/admin',
+    icon: (
+      <Icon as={FaHandsHelping} width="20px" height="20px" color="inherit" />
+    ),
+    path: '/interactions',
+    component: <Interactions />,
   },
   {
     name: 'Sign In',

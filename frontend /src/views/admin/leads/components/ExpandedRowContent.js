@@ -1,7 +1,14 @@
 /* eslint-disable */
 
 import React from 'react';
-import { Box, Text, Flex, Badge, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Flex,
+  Badge,
+  Divider,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 export default function ExpandedRowContent({ row }) {
   // Ensure that row and its properties exist before destructuring them
@@ -27,6 +34,12 @@ export default function ExpandedRowContent({ row }) {
           </Text>
         </Flex>
       )}
+      <Divider
+        borderColor="gray.300"
+        borderWidth="1px"
+        marginTop="1rem"
+        marginBottom="1rem"
+      />
 
       {/* Check if contacts exist and are non-empty */}
       {contacts.length > 0 ? (

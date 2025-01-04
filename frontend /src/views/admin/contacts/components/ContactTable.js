@@ -252,6 +252,9 @@ export default function ComplexTable() {
                         transition: 'transform 0.3s ease',
                         cursor: 'pointer',
                       }}
+                      backgroundColor={
+                        isRowExpanded ? rowBgColor : 'transparent'
+                      }
                     >
                       {row.getVisibleCells().map((cell, index) => (
                         <Td key={cell.id}>

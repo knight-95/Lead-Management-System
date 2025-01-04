@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useToast,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
 import { addContact } from 'api/contactApi';
 import { useState } from 'react';
@@ -72,6 +72,7 @@ const AddContactModal = ({ isOpen, onClose, refetchContacts }) => {
         email: '',
       });
       onClose();
+      window.location.reload();
     } catch (error) {
       console.error('Error adding contact:', error);
       toast({
