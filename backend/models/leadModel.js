@@ -34,7 +34,15 @@ const Lead = sequelize.define(
 );
 
 // Many-to-Many relationship between Lead and Contact
-Lead.belongsToMany(Contact, { through: "LeadContacts", timestamps: false });
-Contact.belongsToMany(Lead, { through: "LeadContacts", timestamps: false });
+Lead.belongsToMany(Contact, {
+  through: "LeadContacts",
+  timestamps: false,
+  onDelete: "CASCADE",
+});
+Contact.belongsToMany(Lead, {
+  through: "LeadContacts",
+  timestamps: false,
+  onDelete: "CASCADE",
+});
 
 export default Lead;

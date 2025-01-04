@@ -17,7 +17,7 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import { addLeadWithContacts } from 'api/api'; // Import the new API function
+import { addLeadWithContacts } from 'api/leadApi'; 
 import { useState } from 'react';
 
 const AddLeadModal = ({ isOpen, onClose, addNewLeadToTable }) => {

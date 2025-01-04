@@ -187,3 +187,35 @@ export const addLeadWithContacts = async (req, res) => {
     });
   }
 };
+
+// Delete lead
+export const deleteLead = async (req, res) => {
+  const transaction = await Lead.sequelize.transaction();
+  try {
+    const { leadId } = req.params;
+
+    // Find the lead by ID
+    const lead = await Lead.findByPk(leadId, { transaction });
+    if (!lead) {
+      return res.status(404).json({ message: "Lead not found" });
+    }
+
+    // Delete the lead
+    await lead.destroy({ transaction });
+
+    // Commit the transaction
+    await transaction.commit();
+    res.status(200).json({
+      message: "Lead deleted successfully",
+    });
+  } catch (error) {
+    // Rollback the transaction in case of an error
+    await transaction.rollback();
+    console.error(error);
+    res.status(500).json({
+      message: "Error deleting lead",
+      error: error.message,
+    });
+  }
+};
+

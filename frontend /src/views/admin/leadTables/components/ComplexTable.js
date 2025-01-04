@@ -21,11 +21,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { fetchLeads, updateLead } from 'api/api';
+import { fetchLeads, updateLead } from 'api/leadApi';
 import Card from 'components/card/Card';
 import React, { useEffect, useState } from 'react';
-import AddLeadModal from './AddLeadModal';
-import EditLeadModal from './EditLeadModal'; // Import the EditLeadModal
+import AddLeadModal from './modal/AddLeadModal';
+import EditLeadModal from './modal/EditLeadModal'; // Import the EditLeadModal
 import ExpandedRowContent from './ExpandedRowContent';
 
 const columnHelper = createColumnHelper();
@@ -40,7 +40,7 @@ export default function ComplexTable() {
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
   const rowBgColor = useColorModeValue('blue.50', 'gray.700');
- 
+
   const addNewLeadToTable = (newLead) => {
     setTableData((prevData) => [...prevData, newLead]); // Add new lead to the table
   };
@@ -260,6 +260,7 @@ export default function ComplexTable() {
               colorScheme="teal"
               size="sm"
             />
+
             <AddLeadModal
               isOpen={isAddModalOpen}
               onClose={() => setIsAddModalOpen(false)}

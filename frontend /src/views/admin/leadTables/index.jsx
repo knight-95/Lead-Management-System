@@ -1,5 +1,5 @@
 import { Box, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
-import { fetchLeads } from 'api/api';
+import { fetchLeads } from 'api/leadApi';
 import { useEffect, useState } from 'react';
 import { columnsDataComplex } from 'views/admin/dataTables/variables/columnsData';
 import ComplexTable from 'views/admin/leadTables/components/ComplexTable';
