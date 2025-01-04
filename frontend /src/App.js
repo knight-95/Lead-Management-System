@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import './assets/css/App.css';
 import AdminLayout from './layouts/admin';
-import AuthLayout from './layouts/auth';
+
 import initialTheme from './theme/theme'; //  { themeGreen }
 // Chakra imports
 
@@ -13,7 +13,6 @@ export default function Main() {
   return (
     <ChakraProvider theme={currentTheme}>
       <Routes>
-        <Route path="auth/*" element={<AuthLayout />} />
         <Route
           path="admin/*"
           element={
