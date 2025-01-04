@@ -1,15 +1,10 @@
-import './assets/css/App.css';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import {} from 'react-router-dom';
-import AuthLayout from './layouts/auth';
-import AdminLayout from './layouts/admin';
-import RTLLayout from './layouts/rtl';
-import {
-  ChakraProvider,
-  // extendTheme
-} from '@chakra-ui/react';
-import initialTheme from './theme/theme'; //  { themeGreen }
+import { ChakraProvider } from '@chakra-ui/react';
 import { useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import './assets/css/App.css';
+import AdminLayout from './layouts/admin';
+import AuthLayout from './layouts/auth';
+import initialTheme from './theme/theme'; //  { themeGreen }
 // Chakra imports
 
 export default function Main() {
@@ -23,12 +18,6 @@ export default function Main() {
           path="admin/*"
           element={
             <AdminLayout theme={currentTheme} setTheme={setCurrentTheme} />
-          }
-        />
-        <Route
-          path="rtl/*"
-          element={
-            <RTLLayout theme={currentTheme} setTheme={setCurrentTheme} />
           }
         />
         <Route path="/" element={<Navigate to="/admin" replace />} />

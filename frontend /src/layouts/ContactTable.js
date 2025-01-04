@@ -11,8 +11,7 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
-  useToast,
+  useColorModeValue
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -23,10 +22,9 @@ import {
 } from '@tanstack/react-table';
 import { fetchContacts, updateContact } from 'api/contactApi'; // Use contacts API
 import Card from 'components/card/Card';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddContactModal from './modal/AddContactModal';
 import EditContactModal from './modal/EditContactModal';
-import ExpandedRowContent from './ExpandedRowContent';
 
 const columnHelper = createColumnHelper();
 

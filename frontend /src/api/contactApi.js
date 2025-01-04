@@ -51,3 +51,25 @@ export const updateContact = async (contactId, contactData) => {
 
   return response.json();
 };
+
+// Associate multiple leads with a contact
+export const associateLeadsWithContact = async (contactId, selectedLeadIds) => {
+  try {
+    const response = await fetch(`${BASE_URL}/contacts/${contactId}/leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ leads: selectedLeadIds }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error associating leads');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error associating leads with contact:', error);
+    throw error;
+  }
+};
+

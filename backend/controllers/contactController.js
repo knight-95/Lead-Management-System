@@ -30,11 +30,12 @@ export const addContact = async (req, res) => {
 // Get all contacts with associated leads
 export const getContacts = async (req, res) => {
   try {
+    // Fetch all contacts with associated leads
     const contacts = await Contact.findAll({
       include: {
         model: Lead, // Include the associated Lead model
         through: {
-          attributes: [], // Optionally, you can exclude the 'through' model columns
+          attributes: [], // Optional: Exclude any unnecessary columns from the join table
         },
       },
     });
@@ -43,10 +44,10 @@ export const getContacts = async (req, res) => {
     const contactsWithLeads = contacts.map((contact) => {
       const leads = contact.Leads.map((lead) => ({
         id: lead.id,
-        name: lead.name, // Add more details as required (e.g., status, email, etc.)
-        status: lead.status, // Assuming there's a `status` field in Lead
-        createdAt: lead.createdAt, // Optional - can also include other fields like 'createdAt'
-        updatedAt: lead.updatedAt, // Optional - can also include other fields like 'updatedAt'
+        name: lead.name,
+        status: lead.status,
+        createdAt: lead.createdAt,
+        updatedAt: lead.updatedAt,
       }));
 
       return {
@@ -55,16 +56,15 @@ export const getContacts = async (req, res) => {
       };
     });
 
-    res.status(200).json(contactsWithLeads);
+    res.status(200).json(contactsWithLeads); // Send contacts with leads
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      message: "Error fetching contacts",
+      message: "Error fetching contacts with associated leads",
       error: error.message,
     });
   }
 };
-
 // Update contact
 export const updateContact = async (req, res) => {
   try {

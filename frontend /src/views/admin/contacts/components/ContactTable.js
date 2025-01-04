@@ -243,7 +243,15 @@ export default function ComplexTable() {
                 const isRowExpanded = expandedRowIds.has(row.id);
                 return (
                   <React.Fragment key={row.id}>
-                    <Tr key={row.id} onClick={() => toggleRowExpansion(row.id)}>
+                    <Tr
+                      key={row.id}
+                      onClick={() => toggleRowExpansion(row.id)}
+                      _hover={{
+                        transform: 'scale(1.02)',
+                        transition: 'transform 0.3s ease',
+                        cursor: 'pointer',
+                      }}
+                    >
                       {row.getVisibleCells().map((cell, index) => (
                         <Td key={cell.id}>
                           {index === row.getVisibleCells().length - 1 ? ( // Check if this is the last column

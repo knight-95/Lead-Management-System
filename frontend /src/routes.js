@@ -1,21 +1,19 @@
-
 import { Icon } from '@chakra-ui/react';
 import {
   MdBarChart,
+  MdContacts,
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
   MdPerson,
-  MdContacts,
 } from 'react-icons/md';
 
 // Admin Imports
-import DataTables from 'views/admin/dataTables';
-import LeadTables from 'views/admin/leads';
+import Contacts from 'views/admin/contacts';
 import MainDashboard from 'views/admin/default';
+import LeadTables from 'views/admin/leads';
 import NFTMarketplace from 'views/admin/marketplace';
 import Profile from 'views/admin/profile';
-import Contacts from 'views/admin/contacts';
 
 // Auth Imports
 import SignInCentered from 'views/auth/signIn';
@@ -58,13 +56,6 @@ const routes = [
     secondary: true,
   },
   {
-    name: 'Data Tables',
-    layout: '/admin',
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: '/data-tables',
-    component: <DataTables />,
-  },
-  {
     name: 'Profile',
     layout: '/admin',
     path: '/profile',
@@ -78,7 +69,6 @@ const routes = [
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: <SignInCentered />,
   },
- 
 ];
 
 export default routes;

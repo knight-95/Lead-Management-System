@@ -18,7 +18,7 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -120,7 +120,7 @@ export default function ComplexTable() {
   };
 
   const handleDeleteConfirm = async () => {
-    console.log("Selected Lead to Delete : ",selectedLeadToDelete)
+    console.log('Selected Lead to Delete : ', selectedLeadToDelete);
     if (selectedLeadToDelete && selectedLeadToDelete.id) {
       try {
         const response = await deleteLead(selectedLeadToDelete.id);
