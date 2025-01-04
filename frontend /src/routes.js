@@ -6,14 +6,16 @@ import {
   MdLock,
   MdOutlineShoppingCart,
   MdPerson,
+  MdContacts,
 } from 'react-icons/md';
 
 // Admin Imports
 import DataTables from 'views/admin/dataTables';
-import LeadTables from 'views/admin/leadTables';
+import LeadTables from 'views/admin/leads';
 import MainDashboard from 'views/admin/default';
 import NFTMarketplace from 'views/admin/marketplace';
 import Profile from 'views/admin/profile';
+import Contacts from 'views/admin/contacts';
 
 // Auth Imports
 import SignInCentered from 'views/auth/signIn';
@@ -32,6 +34,13 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: '/lead-tables',
     component: <LeadTables />,
+  },
+  {
+    name: 'Contacts',
+    layout: '/admin',
+    icon: <Icon as={MdContacts} width="20px" height="20px" color="inherit" />,
+    path: '/contacts',
+    component: <Contacts />,
   },
   {
     name: 'NFT Marketplace',

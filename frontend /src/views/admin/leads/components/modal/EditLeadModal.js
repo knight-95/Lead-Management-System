@@ -12,11 +12,11 @@ import {
   FormLabel,
   Input,
   useToast,
-  Select
+  Select,
 } from '@chakra-ui/react';
 
 const EditLeadModal = ({ isOpen, onClose, lead, onSave }) => {
-  // Toast hook for displaying success or error messages
+  
   const toast = useToast();
 
   // State to manage form data
@@ -61,11 +61,11 @@ const EditLeadModal = ({ isOpen, onClose, lead, onSave }) => {
         duration: 3000,
         isClosable: true,
       });
-      console.log("Form Data : ", formData);
+      console.log('Form Data : ', formData);
       return;
     }
 
-    console.log("Saving formData: ", formData); // Debug log
+    console.log('Saving formData: ', formData); // Debug log
     onSave(formData); // Pass updated form data to onSave function
     onClose(); // Close the modal
     toast({
@@ -131,7 +131,7 @@ const EditLeadModal = ({ isOpen, onClose, lead, onSave }) => {
           {/* Lead Status */}
           <FormControl mt={4}>
             <FormLabel>Lead Status</FormLabel>
-            <Select 
+            <Select
               name="leadStatus"
               value={formData.leadStatus}
               onChange={handleInputChange}

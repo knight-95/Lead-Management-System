@@ -170,7 +170,7 @@ const AddLeadModal = ({ isOpen, onClose, addNewLeadToTable }) => {
                 <option value="New">New</option>
                 <option value="Contacted">Contacted</option>
                 <option value="Converted">Converted</option>
-                <option value="Follow Up">Follow Up</option>
+                <option value="FollowUp">Follow Up</option>
               </Select>
             </FormControl>
 

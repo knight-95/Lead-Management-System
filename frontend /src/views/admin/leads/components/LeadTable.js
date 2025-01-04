@@ -1,7 +1,14 @@
-import { AddIcon, EditIcon } from '@chakra-ui/icons'; // Import the EditIcon
+import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Badge,
   Box,
+  Button,
   Flex,
   IconButton,
   Table,
@@ -11,8 +18,7 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
-  useToast,
+  useColorModeValue
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -21,13 +27,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { fetchLeads, updateLead } from 'api/leadApi';
+import { deleteLead, fetchLeads, updateLead } from 'api/leadApi';
 import Card from 'components/card/Card';
 import React, { useEffect, useState } from 'react';
-import AddLeadModal from './modal/AddLeadModal';
-import EditLeadModal from './modal/EditLeadModal'; // Import the EditLeadModal
 import ExpandedRowContent from './ExpandedRowContent';
-
+import AddLeadModal from './modal/AddLeadModal';
+import EditLeadModal from './modal/EditLeadModal';
 const columnHelper = createColumnHelper();
 
 export default function ComplexTable() {
@@ -37,6 +42,9 @@ export default function ComplexTable() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedLeadToDelete, setSelectedLeadToDelete] = useState(null);
+  const cancelRef = React.useRef();
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
   const rowBgColor = useColorModeValue('blue.50', 'gray.700');
@@ -45,11 +53,10 @@ export default function ComplexTable() {
     setTableData((prevData) => [...prevData, newLead]); // Add new lead to the table
   };
 
-  const toast = useToast();
   const statusColors = {
     new: '#00B0FF',
     contacted: '#FF7043',
-    follow_Up: '#FF9800',
+    followup: '#FF9800',
     converted: '#4CAF50',
   };
 
@@ -105,6 +112,29 @@ export default function ComplexTable() {
     } else {
       console.error('Updated lead is missing an id:', updatedLead);
     }
+  };
+
+  const handleDeleteClick = (lead) => {
+    setSelectedLeadToDelete(lead);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    console.log("Selected Lead to Delete : ",selectedLeadToDelete)
+    if (selectedLeadToDelete && selectedLeadToDelete.id) {
+      try {
+        const response = await deleteLead(selectedLeadToDelete.id);
+        if (response) {
+          const leads = await fetchLeads();
+          setTableData(leads);
+        } else {
+          console.error('Failed to delete the lead');
+        }
+      } catch (error) {
+        console.error('Error deleting lead:', error);
+      }
+    }
+    setIsDeleteModalOpen(false);
   };
 
   const columns = [
@@ -213,12 +243,22 @@ export default function ComplexTable() {
     columnHelper.display({
       id: 'actions',
       cell: (info) => (
-        <IconButton
-          icon={<EditIcon />}
-          onClick={() => handleEditClick(info.row.original)}
-          aria-label="Edit lead"
-          variant="ghost"
-        />
+        <Flex>
+          <IconButton
+            icon={<EditIcon />}
+            onClick={() => handleEditClick(info.row.original)}
+            aria-label="Edit lead"
+            variant="ghost"
+          />
+          <IconButton
+            icon={<DeleteIcon />}
+            onClick={() => handleDeleteClick(info.row.original)}
+            aria-label="Delete lead"
+            variant="ghost"
+            colorScheme="red"
+            ml={2}
+          />
+        </Flex>
       ),
     }),
   ];
@@ -350,6 +390,34 @@ export default function ComplexTable() {
           onClose={() => setIsEditModalOpen(false)}
           onSave={handleSave}
         />
+      )}
+      {isDeleteModalOpen && (
+        <AlertDialog
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          leastDestructiveRef={cancelRef}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader>Confirm Deletion</AlertDialogHeader>
+              <AlertDialogBody>
+                Are you sure you want to delete the lead "
+                {selectedLeadToDelete?.restaurantName}"?
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button
+                  ref={cancelRef}
+                  onClick={() => setIsDeleteModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button colorScheme="red" onClick={handleDeleteConfirm} ml={3}>
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       )}
     </>
   );

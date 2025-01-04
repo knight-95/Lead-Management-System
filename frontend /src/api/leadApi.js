@@ -65,3 +65,22 @@ export const addLeadWithContacts = async (leadWithContacts) => {
     throw error;
   }
 };
+
+// Delete a lead
+export const deleteLead = async (leadId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/leads/${leadId}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to delete lead');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to delete lead:', error);
+    throw error;
+  }
+};

@@ -26,6 +26,6 @@ router.post("/:leadId/contacts", associateContacts);
 router.put("/:leadId", updateLead);
 
 // DELETE lead
-router.delete("/leads/:leadId", deleteLead);
+router.delete('/:leadId', deleteLead);
 
 export default router;

@@ -1,9 +1,10 @@
 import express from "express";
 import {
-    addContact,
-    getContacts,
-    updateContact,
-  } from "../controllers/contactController.js";
+  addContact,
+  getContacts,
+  updateContact,
+  associateContactWithLeads,
+} from "../controllers/contactController.js";
 
 const router = express.Router();
 
@@ -14,6 +15,9 @@ router.post("/", addContact);
 router.get("/", getContacts);
 
 // PUT route to update Contact
-router.put('/:contactId', updateContact);
+router.put("/:contactId", updateContact);
+
+// POST route to associate a contact with multiple leads
+router.post("/:contactId/leads", associateContactWithLeads);
 
 export default router;

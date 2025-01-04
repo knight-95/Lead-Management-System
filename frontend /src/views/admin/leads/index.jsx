@@ -1,11 +1,10 @@
 import { Box, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
 import { fetchLeads } from 'api/leadApi';
 import { useEffect, useState } from 'react';
-import { columnsDataComplex } from 'views/admin/dataTables/variables/columnsData';
-import ComplexTable from 'views/admin/leadTables/components/ComplexTable';
+import LeadTable from 'views/admin/leads/components/LeadTable';
 
 export default function Settings() {
-  console.log("Settings component is rendering");
+  console.log('Lead component is rendering');
 
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +27,12 @@ export default function Settings() {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <Spinner size="xl" />
       </Box>
     );
@@ -45,10 +49,7 @@ export default function Settings() {
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
       <SimpleGrid mb="20px" spacing={{ base: '20px', xl: '20px' }}>
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableData}
-        />
+        <LeadTable tableData={tableData} />
       </SimpleGrid>
     </Box>
   );
