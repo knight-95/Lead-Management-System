@@ -35,7 +35,7 @@ import AddLeadModal from './modal/AddLeadModal';
 import EditLeadModal from './modal/EditLeadModal';
 const columnHelper = createColumnHelper();
 
-export default function ComplexTable() {
+export default function LeadTable() {
   const [tableData, setTableData] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [expandedRowIds, setExpandedRowIds] = useState(new Set());

@@ -1,12 +1,14 @@
 import { Icon } from '@chakra-ui/react';
 import { FaHandsHelping } from 'react-icons/fa';
 import { MdBarChart, MdContacts, MdHome } from 'react-icons/md';
+import { IoCall } from 'react-icons/io5';
 
 // Admin Imports
 import Contacts from 'views/admin/contacts';
 import MainDashboard from 'views/admin/default';
 import Interactions from 'views/admin/interactions';
 import LeadTables from 'views/admin/leads';
+import Calls from 'views/admin/calls';
 import NotFound from 'views/admin/NotFound';
 
 const routes = [
@@ -21,7 +23,7 @@ const routes = [
     name: 'Leads',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: '/lead-tables',
+    path: '/leads',
     component: <LeadTables />,
   },
   {
@@ -39,6 +41,13 @@ const routes = [
     ),
     path: '/interactions',
     component: <Interactions />,
+  },
+  {
+    name: 'Call Schedules',
+    layout: '/admin',
+    icon: <Icon as={IoCall} width="20px" height="20px" color="inherit" />,
+    path: '/callschedules',
+    component: <Calls />,
   },
   // {
   //   name: '404 Not Found',

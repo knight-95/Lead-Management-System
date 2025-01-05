@@ -11,8 +11,7 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
-  useToast,
+  useColorModeValue
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -24,13 +23,12 @@ import {
 import { fetchContacts, updateContact } from 'api/contactApi'; // Use contacts API
 import Card from 'components/card/Card';
 import React, { useEffect, useState } from 'react';
+import ExpandedRowContent from './ExpandedRowContent';
 import AddContactModal from './modal/AddContactModal';
 import EditContactModal from './modal/EditContactModal';
-import ExpandedRowContent from './ExpandedRowContent';
 
-const columnHelper = createColumnHelper();
-
-export default function ComplexTable() {
+export default function ContactTable() {
+  const columnHelper = createColumnHelper();
   const [tableData, setTableData] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [expandedRowIds, setExpandedRowIds] = useState(new Set());
