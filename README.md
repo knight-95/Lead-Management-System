@@ -50,6 +50,11 @@ A system to help Key Account Managers (KAMs) at Udaan efficiently manage restaur
 <img width="1470" alt="Screenshot 2025-01-05 at 8 48 51 PM" src="https://github.com/user-attachments/assets/6c06a9f3-7d8d-479b-8985-c482c24933fe" />
 
 
+## Performance Tracking
+
+<img width="1155" alt="Screenshot 2025-01-05 at 8 47 48 PM copy" src="https://github.com/user-attachments/assets/34275f80-b0bc-415d-8bfe-f1ab3d0179cc" />
+
+
 ## Technologies Used
 - **Frontend**: React, Chakra UI
 - **Backend**: Node.js, Express
