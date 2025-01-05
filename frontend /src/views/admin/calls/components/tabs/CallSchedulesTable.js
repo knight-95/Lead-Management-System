@@ -1,8 +1,7 @@
-import { EditIcon, AddIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  Card,
   Flex,
   IconButton,
   Table,
@@ -13,28 +12,26 @@ import {
   Thead,
   Tr,
   useColorModeValue,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Input,
-  FormControl,
-  FormLabel,
+  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
+  flexRender,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
-  flexRender,
 } from '@tanstack/react-table';
-import { getAllCallSchedules, addOrUpdateCallSchedule } from 'api/callPlanApi';
-import React, { useEffect, useState } from 'react';
+import {
+  addOrUpdateCallSchedule,
+  getAllCallSchedules,
+  updateCallSchedule,
+} from 'api/callPlanApi';
+import { useEffect, useState } from 'react';
+import AddCallScheduleModal from '../modal/AddCallScheduleModal';
+import EditCallScheduleModal from '../modal/EditCallScheduleModal';
 
 const CallSchedulesTable = () => {
+  const toast = useToast();
   const columnHelper = createColumnHelper();
   const [tableData, setTableData] = useState([]);
   const [callSchedules, setCallSchedules] = useState([]);
@@ -45,6 +42,14 @@ const CallSchedulesTable = () => {
     callFrequency: '',
     lastCallDate: '',
   }); // New call form state
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State for edit modal
+  const [editCall, setEditCall] = useState({
+    leadId: '',
+    callFrequency: '',
+    lastCallDate: '',
+  }); // Editing call form state
+
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
   const rowBgColor = useColorModeValue('blue.50', 'gray.700');
@@ -62,7 +67,7 @@ const CallSchedulesTable = () => {
     };
 
     fetchData();
-  }, [isModalOpen]);
+  }, [isModalOpen, isEditModalOpen]);
 
   const handleAddNewCall = async () => {
     try {
@@ -77,10 +82,79 @@ const CallSchedulesTable = () => {
       setTableData([...tableData, newSchedule]);
       setIsModalOpen(false); // Close the modal after saving
 
-      alert('New Call Schedule Added!');
+      // Show success toast
+      toast({
+        title: 'New Call Schedule Added',
+        description: 'The call schedule was successfully added.',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error('Error adding new call schedule:', error);
-      alert('Failed to add new call schedule');
+
+      // Show error toast
+      toast({
+        title: 'Failed to Add Call Schedule',
+        description:
+          'There was an issue adding the call schedule. Please try again.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      });
+    }
+  };
+  const handleEditClick = (callSchedule) => {
+    setEditCall({
+      lead_id: callSchedule.lead_id,
+      call_frequency: callSchedule.call_frequency,
+      last_call_date: callSchedule.last_call_date,
+      next_call_date: callSchedule.next_call_date,
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditCallSchedule = async (
+    leadId,
+    callFrequency,
+    lastCallDate,
+  ) => {
+    try {
+      const updatedSchedule = await updateCallSchedule(
+        leadId,
+        callFrequency,
+        lastCallDate,
+      );
+
+      // Update the table data after editing
+      setCallSchedules((prevSchedules) =>
+        prevSchedules.map((schedule) =>
+          schedule.lead_id === leadId
+            ? {
+                ...schedule,
+                call_frequency: callFrequency,
+                last_call_date: lastCallDate,
+              }
+            : schedule,
+        ),
+      );
+      setTableData((prevData) =>
+        prevData.map((schedule) =>
+          schedule.lead_id === leadId
+            ? {
+                ...schedule,
+                call_frequency: callFrequency,
+                last_call_date: lastCallDate,
+              }
+            : schedule,
+        ),
+      );
+      setIsEditModalOpen(false); // Close the modal after saving
+
+      alert('Call Schedule Updated!');
+    } catch (error) {
+      console.error('Error updating call schedule:', error);
+      alert('Failed to update call schedule');
     }
   };
 
@@ -180,8 +254,8 @@ const CallSchedulesTable = () => {
         <Flex>
           <IconButton
             icon={<EditIcon />}
-            // onClick={() => handleEditClick(info.row.original)}
-            aria-label="Edit contact"
+            onClick={() => handleEditClick(info.row.original)} // Open edit modal with data
+            aria-label="Edit call schedule"
             variant="ghost"
             mr={2}
           />
@@ -202,11 +276,10 @@ const CallSchedulesTable = () => {
   return (
     <>
       <Box mb="20px">
-        <Button colorScheme="teal" onClick={() => setIsModalOpen(true)}>
+        <Button colorScheme="teal" onClick={() => setIsModalOpen(true)} mt="1rem">
           Add New Call Schedule
         </Button>
       </Box>
-
       <Box>
         <Table variant="simple" color="gray.500" mb="24px" mt="12px">
           <Thead>
@@ -243,55 +316,22 @@ const CallSchedulesTable = () => {
         </Table>
       </Box>
 
-      {/* Modal for adding a new call schedule */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add New Call Schedule</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl id="leadId" isRequired>
-              <FormLabel>Lead ID</FormLabel>
-              <Input
-                type="text"
-                value={newCall.leadId}
-                onChange={(e) =>
-                  setNewCall({ ...newCall, leadId: e.target.value })
-                }
-              />
-            </FormControl>
-            <FormControl id="callFrequency" isRequired mt={4}>
-              <FormLabel>Call Frequency (in days)</FormLabel>
-              <Input
-                type="number"
-                value={newCall.callFrequency}
-                onChange={(e) =>
-                  setNewCall({ ...newCall, callFrequency: e.target.value })
-                }
-              />
-            </FormControl>
-            <FormControl id="lastCallDate" isRequired mt={4}>
-              <FormLabel>Last Call Date</FormLabel>
-              <Input
-                type="date"
-                value={newCall.lastCallDate}
-                onChange={(e) =>
-                  setNewCall({ ...newCall, lastCallDate: e.target.value })
-                }
-              />
-            </FormControl>
-          </ModalBody>
+      {/* Use the AddCallScheduleModal */}
+      <AddCallScheduleModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        newCall={newCall}
+        setNewCall={setNewCall}
+        handleAddNewCall={handleAddNewCall}
+      />
 
-          <ModalFooter>
-            <Button colorScheme="teal" mr={3} onClick={handleAddNewCall}>
-              Save
-            </Button>
-            <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      {/* Edit Call Schedule Modal */}
+      <EditCallScheduleModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        call={editCall}
+        onSave={handleEditCallSchedule}
+      />
     </>
   );
 };

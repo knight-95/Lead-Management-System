@@ -12,6 +12,7 @@ import {
 import Card from 'components/card/Card';
 import { useState } from 'react';
 import CallSchedulesTable from './tabs/CallSchedulesTable';
+import LeadCallToday from './tabs/LeadCallToday';
 
 export default function CallTable() {
   const textColor = useColorModeValue('secondaryGray.900', 'white');
@@ -47,7 +48,7 @@ export default function CallTable() {
         >
           <Tabs>
             <TabList>
-              <Tab paddingLeft='0px' marginRight="2rem">
+              <Tab paddingLeft="0px" marginRight="2rem">
                 <Text
                   color={textColor}
                   fontSize="15px"
@@ -57,7 +58,7 @@ export default function CallTable() {
                   Call Schedules Overview
                 </Text>
               </Tab>
-              <Tab paddingLeft='0px'>
+              <Tab paddingLeft="0px">
                 <Text
                   color={textColor}
                   fontSize="15px"
@@ -71,10 +72,10 @@ export default function CallTable() {
 
             <TabPanels>
               <TabPanel>
-                <CallSchedulesTable/>
+                <CallSchedulesTable />
               </TabPanel>
               <TabPanel>
-                <p>Content for Tab 2</p>
+                <LeadCallToday/>
               </TabPanel>
             </TabPanels>
           </Tabs>

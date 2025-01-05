@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function ExpandedRowContent({ row }) {
-  // Ensure that row and its properties exist before destructuring them
+ 
   const { address, Contacts } = row.original || {}; // Fallback to empty object if row.original is undefined or null
   const contacts = Contacts || []; // Default to an empty array if Contacts is undefined
 

@@ -84,6 +84,19 @@ export const updateCallSchedule = async (req, res) => {
         .json({ message: "Call schedule not found for this lead" });
     }
 
+    // Ensure the last_call_date is valid
+    const parsedLastCallDate = new Date(last_call_date);
+    if (isNaN(parsedLastCallDate)) {
+      return res.status(400).json({
+        message: "Invalid last_call_date format",
+      });
+    }
+
+    // Calculate the next call date
+    const nextCallDate = new Date(
+      parsedLastCallDate.getTime() + call_frequency * 24 * 60 * 60 * 1000
+    ); // Add frequency in days (converted to milliseconds)
+
     // Update the call schedule fields that are provided
     if (call_frequency !== undefined) {
       callSchedule.call_frequency = call_frequency;
@@ -93,11 +106,10 @@ export const updateCallSchedule = async (req, res) => {
       callSchedule.last_call_date = last_call_date;
     }
 
-    // Calculate next call date based on updated values
-    const nextCallDate = new Date(callSchedule.last_call_date);
-    nextCallDate.setDate(nextCallDate.getDate() + callSchedule.call_frequency);
+    // Ensure that nextCallDate is correct and set it
     callSchedule.next_call_date = nextCallDate;
 
+    // Save the updated schedule
     await callSchedule.save();
 
     res.status(200).json({
