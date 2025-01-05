@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000'; 
+const BASE_URL = 'http://13.48.25.0:3000';
 
 // Fetch all interactions
 export const fetchAllInteractions = async () => {
