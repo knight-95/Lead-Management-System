@@ -1,39 +1,59 @@
-import {
-  Avatar,
-  Box,
-  Flex,
-  FormLabel,
-  Icon,
-  Select,
-  SimpleGrid,
-  useColorModeValue,
-} from '@chakra-ui/react';
-// Custom components
+import { Box, Icon, SimpleGrid, useColorModeValue } from '@chakra-ui/react';
+import { fetchContacts } from 'api/contactApi';
+import { fetchAllInteractions } from 'api/interactionApi';
+import { fetchLeads } from 'api/leadApi';
 import MiniCalendar from 'components/calendar/MiniCalendar';
 import MiniStatistics from 'components/card/MiniStatistics';
-import React from 'react';
-import {
-  MdAddTask,
-  MdAttachMoney,
-  MdBarChart,
-  MdFileCopy,
-} from 'react-icons/md';
-import ComplexTable from 'views/admin/default/components/ComplexTable';
+import { useEffect, useState } from 'react';
+import { FaHandsHelping } from 'react-icons/fa';
+import { MdBarChart, MdContacts } from 'react-icons/md';
+
 import DailyTraffic from 'views/admin/default/components/DailyTraffic';
 import PieCard from 'views/admin/default/components/PieCard';
-import TotalSpent from 'views/admin/default/components/TotalSpent';
-import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue';
-import {
-  columnsDataCheck,
-  columnsDataComplex,
-} from 'views/admin/default/variables/columnsData';
-import tableDataCheck from 'views/admin/default/variables/tableDataCheck.json';
-import tableDataComplex from 'views/admin/default/variables/tableDataComplex.json';
+import PieCardLeads from 'views/admin/default/components/PieCardLeads';
 
 export default function UserReports() {
   // Chakra Color Mode
   const brandColor = useColorModeValue('brand.500', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
+
+  const [totalLeads, setTotalLeads] = useState(0);
+  const [totalContacts, setTotalContacts] = useState(0);
+  const [totalInteractions, setTotalInteractions] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalLeads = async () => {
+      try {
+        const schedules = await fetchLeads();
+        setTotalLeads(schedules.length);
+      } catch (error) {
+        console.error('Error fetching call schedules:', error);
+      }
+    };
+
+    const fetchTotalContacts = async () => {
+      try {
+        const contacts = await fetchContacts();
+        setTotalContacts(contacts.length);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
+    };
+
+    const fetchTotalInteractions = async () => {
+      try {
+        const interactions = await fetchAllInteractions();
+        setTotalInteractions(interactions.data.length);
+      } catch (error) {
+        console.error('Error fetching interactions:', error);
+      }
+    };
+
+    fetchTotalLeads();
+    fetchTotalContacts();
+    fetchTotalInteractions();
+  }, []);
+
   return (
     <Box>
       <SimpleGrid
@@ -43,68 +63,49 @@ export default function UserReports() {
       >
         <MiniStatistics
           startContent={
-            <Icon w="32px" h="32px" as={MdBarChart} color={brandColor} />
+            <Icon
+              mt="1rem"
+              w="32px"
+              h="32px"
+              as={MdBarChart}
+              color={brandColor}
+            />
           }
-          name="Earnings"
-          value="$350.4"
+          name="Total Leads"
+          value={totalLeads}
         />
         <MiniStatistics
           startContent={
-            <Icon w="32px" h="32px" as={MdAttachMoney} color={brandColor} />
+            <Icon
+              mt="1rem"
+              w="32px"
+              h="32px"
+              as={MdContacts}
+              color={brandColor}
+            />
           }
-          name="Spend this month"
-          value="$642.39"
-        />
-        <MiniStatistics growth="+23%" name="Sales" value="$574.34" />
-        <MiniStatistics
-          endContent={
-            <Flex me="-16px" mt="10px">
-              <FormLabel htmlFor="balance">
-                <Avatar src="" />
-              </FormLabel>
-              <Select
-                id="balance"
-                variant="mini"
-                mt="5px"
-                me="0px"
-                defaultValue="usd"
-              >
-                <option value="usd">USD</option>
-                <option value="eur">EUR</option>
-                <option value="gba">GBA</option>
-              </Select>
-            </Flex>
-          }
-          name="Your balance"
-          value="$1,000"
-        />
-        <MiniStatistics
-          startContent={<Icon w="28px" h="28px" as={MdAddTask} color="white" />}
-          name="New Tasks"
-          value="154"
+          name="Total Contacts"
+          value={totalContacts}
         />
         <MiniStatistics
           startContent={
-            <Icon w="32px" h="32px" as={MdFileCopy} color={brandColor} />
+            <Icon
+              mt="1rem"
+              w="32px"
+              h="32px"
+              as={FaHandsHelping}
+              color={brandColor}
+            />
           }
-          name="Total Projects"
-          value="2935"
+          // growth="+23%"
+          name="Total Interactions"
+          value={totalInteractions}
         />
       </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
-        <TotalSpent />
-        <WeeklyRevenue />
-      </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <DailyTraffic />
-        <PieCard />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
+        {/* <PieCard /> */}
+        <PieCardLeads/>
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
           <MiniCalendar h="100%" minW="100%" selectRange={false} />
         </SimpleGrid>
