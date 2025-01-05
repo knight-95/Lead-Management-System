@@ -7,6 +7,7 @@ import Contacts from 'views/admin/contacts';
 import MainDashboard from 'views/admin/default';
 import Interactions from 'views/admin/interactions';
 import LeadTables from 'views/admin/leads';
+import NotFound from 'views/admin/NotFound';
 
 const routes = [
   {
@@ -39,6 +40,12 @@ const routes = [
     path: '/interactions',
     component: <Interactions />,
   },
+  // {
+  //   name: '404 Not Found',
+  //   layout: '/admin',
+  //   path: '*', // Wildcard path for catch-all
+  //   component: <NotFound />, // Render the 404 page (this won't be shown in the sidebar)
+  // },
 ];
 
 export default routes;

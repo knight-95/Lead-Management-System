@@ -8,8 +8,6 @@ import {
   SimpleGrid,
   useColorModeValue,
 } from '@chakra-ui/react';
-// Assets
-import Usa from 'assets/img/dashboards/usa.png';
 // Custom components
 import MiniCalendar from 'components/calendar/MiniCalendar';
 import MiniStatistics from 'components/card/MiniStatistics';
@@ -20,7 +18,6 @@ import {
   MdBarChart,
   MdFileCopy,
 } from 'react-icons/md';
-import CheckTable from 'views/admin/default/components/CheckTable';
 import ComplexTable from 'views/admin/default/components/ComplexTable';
 import DailyTraffic from 'views/admin/default/components/DailyTraffic';
 import PieCard from 'views/admin/default/components/PieCard';
@@ -63,7 +60,7 @@ export default function UserReports() {
           endContent={
             <Flex me="-16px" mt="10px">
               <FormLabel htmlFor="balance">
-                <Avatar src={Usa} />
+                <Avatar src="" />
               </FormLabel>
               <Select
                 id="balance"
@@ -100,11 +97,8 @@ export default function UserReports() {
         <WeeklyRevenue />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
-          <DailyTraffic />
-          <PieCard />
-        </SimpleGrid>
+        <DailyTraffic />
+        <PieCard />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
         <ComplexTable
