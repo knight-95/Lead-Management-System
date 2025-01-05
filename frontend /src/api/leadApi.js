@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://13.48.25.0:3000';
 
 export const fetchLeads = async () => {
   try {
@@ -72,7 +72,7 @@ export const deleteLead = async (leadId) => {
     const response = await fetch(`${BASE_URL}/leads/${leadId}`, {
       method: 'DELETE',
     });
-    
+
     if (!response.ok) {
       throw new Error('Failed to delete lead');
     }

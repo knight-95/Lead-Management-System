@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000'; // Update this if your API runs on a different port or URL
+const BASE_URL = 'http://localhost:3000'; 
 
 // Fetch all interactions
 export const fetchAllInteractions = async () => {

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://13.48.25.0:3000';
 
 // Add or update call schedule
 export const addOrUpdateCallSchedule = async (
