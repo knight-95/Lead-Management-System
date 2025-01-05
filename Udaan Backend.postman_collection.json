@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "e0fa89cf-2471-4fa8-b267-dd9dfef47f26",
+		"name": "Udaan Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40649038"
+	},
+	"item": [
+		{
+			"name": "Get All Leads",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/leads",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"leads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Lead",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"restaurantName\": \"ITC Royal Bengal\",\n  \"address\": \"Park Street\",\n  \"phone\": \"9876543210\",\n  \"email\": \"itcbengal@gmail.com\",\n  \"leadStatus\": \"Contacted\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/leads",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"leads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Lead",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"restaurantName\": \"Guru Kripa\",\n  \"address\": \"Updated Address\",\n  \"phone\": \"8529193766\",\n  \"email\": \"updatedemail@restaurant.com\",\n  \"leadStatus\": \"contacted\",\n  \"contacts\": [{\n      \"name\": \"Ali Smith\",\n      \"role\": \"Chef\",\n      \"phone\": \"1231231230\",\n      \"email\": \"janesmith@awesome.com\"\n    }]  // Optional, only if you want to update associated contacts\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/leads/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"leads",
+						"2"
+					]
+				},
+				"description": "http://localhost:3000/leads/2\n\nIf we update contact inside lead, then it will create new contact"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Contacts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Contact",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Saket Doe\",\n  \"role\": \"Owner\",\n  \"phone\": \"9876543210\",\n  \"email\": \"saketdoe@kfc.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Associate Contact with Lead",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"contacts\": [2] \n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/leads/2/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"leads",
+						"2",
+						"contacts"
+					]
+				},
+				"description": " http://localhost:3000/leads/2/contacts"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Contact",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"role\": \"Manager\",\n  \"phone\": \"9876543211\",\n  \"email\": \"alismith@awesome.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/contacts/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts",
+						"4"
+					]
+				},
+				"description": "http://localhost:3000/contacts/4\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Interaction with a lead",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"lead_id\": 1,\n  \"interaction_type\": \"Meeting\",\n  \"interaction_date\": \"2024-12-21T10:30:00Z\",\n  \"details\": \"Discussed partnership opportunities.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/interactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"interactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Interactions for a specific Lead",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/interactions/lead/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"interactions",
+						"lead",
+						"2"
+					]
+				},
+				"description": "http://localhost:3000/interactions/lead/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Set a Call Schedule",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"call_frequency\": 3,\n  \"last_call_date\": \"2024-12-23T10:00:00Z\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/call-schedules/1/call-schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"call-schedules",
+						"1",
+						"call-schedule"
+					]
+				},
+				"description": "Set Call Schedule\n\n- **URL**: `PUT http://localhost:3000/call-schedules/1/call-schedule`\n    \n- json body { \"call_frequency\": 7}\n    \n\nor with a specified last call date:\n\n- json body { \"call_frequency\": 7, \"last_call_date\": \"2024-12-26T10:00:00Z\"}"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Call Schedule",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/call-schedules/1/update-call",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"call-schedules",
+						"1",
+						"update-call"
+					]
+				},
+				"description": "#### Update Call Schedule\n\n- **URL**: `PUT http://localhost:3000/call-schedules/1/update-call`\n    \n- json { \"last_call_date\": \"2024-12-26T10:00:00Z\", \"call_frequency\": 5}\n    \n\nor without specifying the last call date:\n\n- json { \"call_frequency\": 5}\n    \n\n### Expected Responses\n\n**Set Call Schedule** (without specifying `last_call_date`):\n\n``` json\n{\n  \"message\": \"Call schedule set successfully\",\n  \"callSchedule\": {\n    \"id\": 1,\n    \"lead_id\": 1,\n    \"call_frequency\": 7,\n    \"last_call_date\": \"2024-12-26T10:00:00.000Z\",\n    \"next_call_date\": \"2024-01-02T10:00:00.000Z\"\n  }\n}\n\n ```\n\n**Update Call Schedule** (without specifying `last_call_date`):\n\n``` json\n{\n  \"message\": \"Call schedule updated successfully\",\n  \"callSchedule\": {\n    \"id\": 1,\n    \"lead_id\": 1,\n    \"call_frequency\": 5,\n    \"last_call_date\": \"2024-12-26T10:00:00.000Z\",\n    \"next_call_date\": \"2024-12-31T10:00:00.000Z\"\n  }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Call Schedules",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/call-schedules",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"call-schedules"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Associate leads with contact",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"leads\": [1, 2, 4]  // Array of lead IDs with which the contact will be associated\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/contacts/14/leads",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts",
+						"14",
+						"leads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Interactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/interactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"interactions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:3000"
+		}
+	]
+}
