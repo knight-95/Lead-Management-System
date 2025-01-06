@@ -58,7 +58,7 @@ A system to help Key Account Managers (KAMs) at Udaan efficiently manage restaur
 
 ## Technologies Used
 - **Frontend**: React, Chakra UI
-- **Backend**: Node.js, Express
+- **Backend**: Node.js, Express, AWS
 - **Database**: MySQL
 
 ## Getting Started
