@@ -1,4 +1,4 @@
-const BASE_URL = 'http://13.48.25.0:3000';
+const BASE_URL = 'http://13.61.169.166:3000';
 
 export const fetchContacts = async () => {
   try {

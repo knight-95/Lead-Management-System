@@ -50,6 +50,8 @@ export const getAllInteractions = async (req, res) => {
     // Retrieve all interactions from the database
     const interactions = await Interaction.findAll();
 
+    console.log("Logging interactions : ", interactions);
+
     // Send the interactions as a response
     return res.status(200).json({
       success: true,

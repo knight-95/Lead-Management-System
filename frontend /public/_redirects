@@ -1,2 +1,3 @@
 /*    /index.html    200
-
+/leads    http://13.48.25.0:3000/leads    200
+/interactions http://13.48.25.0:3000/interactions    200

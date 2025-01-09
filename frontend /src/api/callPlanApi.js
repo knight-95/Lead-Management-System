@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://13.48.25.0:3000';
+const BASE_URL = 'http://13.61.169.166:3000';
 
 // Add or update call schedule
 export const addOrUpdateCallSchedule = async (
@@ -7,7 +7,7 @@ export const addOrUpdateCallSchedule = async (
   lastCallDate,
 ) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/call-schedules/${leadId}`, {
+    const response = await fetch(`${BASE_URL}/call-schedules/${leadId}`, {
       method: 'POST', // Use 'PUT' if you're updating
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const updateCallSchedule = async (
   lastCallDate,
 ) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/call-schedules/${leadId}`, {
+    const response = await fetch(`${BASE_URL}/call-schedules/${leadId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export const updateCallSchedule = async (
 // Get all call schedules
 export const getAllCallSchedules = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/call-schedules`, {
+    const response = await fetch(`${BASE_URL}/call-schedules`, {
       method: 'GET',
     });
 
@@ -83,7 +83,7 @@ export const getAllCallSchedules = async () => {
 export const getCallSchedulesByLeadId = async (leadId) => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/call-schedules/lead/${leadId}`,
+      `${BASE_URL}/call-schedules/lead/${leadId}`,
       {
         method: 'GET',
       },
