@@ -1,3 +1,5 @@
+import callSchedules from "data/callPlanData";
+
 const BASE_URL = 'http://13.61.169.166:3000';
 
 // Add or update call schedule
@@ -75,7 +77,7 @@ export const getAllCallSchedules = async () => {
     return data;
   } catch (error) {
     console.error('Error fetching all call schedules:', error);
-    throw error;
+    return callSchedules;
   }
 };
 

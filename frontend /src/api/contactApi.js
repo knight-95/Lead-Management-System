@@ -1,3 +1,5 @@
+import contactData from "data/contactData";
+
 const BASE_URL = 'http://13.61.169.166:3000';
 
 export const fetchContacts = async () => {
@@ -10,7 +12,7 @@ export const fetchContacts = async () => {
     return data;
   } catch (error) {
     console.error('Failed to fetch leads:', error);
-    return [];
+    return contactData;
   }
 };
 

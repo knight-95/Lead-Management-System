@@ -1,3 +1,6 @@
+import interactionsByLead from "data/interactionByLead";
+import interactionsData from "data/interactionData";
+
 const BASE_URL = 'http://13.61.169.166:3000';
 
 // Fetch all interactions
@@ -11,7 +14,7 @@ export const fetchAllInteractions = async () => {
     return data; // Return all interactions
   } catch (error) {
     console.error('Failed to fetch all interactions:', error);
-    return []; // Return an empty array in case of an error
+    return interactionsData; // Return an empty array in case of an error
   }
 };
 
@@ -26,7 +29,8 @@ export const fetchInteractionsByLead = async (leadId) => {
     return data;
   } catch (error) {
     console.error('Failed to fetch interactions:', error);
-    return [];
+    return interactionsByLead;
+    // return [];
   }
 };
 
